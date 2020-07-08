@@ -24,7 +24,10 @@ function playerMovement()
 
 	if [ $playeronePosition -lt 0 ]
 	then
-		playeronePosition=0
+	playeronePosition=0
+	elif [ $playeronePosition -gt 100 ]
+	then
+	playeronePosition=$(( $playeronePosition-$dieValue ))
 	fi
 
 	echo "Player position is : "$playeronePosition
@@ -34,3 +37,5 @@ while [ $playeronePosition -lt 100 ]
 do
 	playerMovement
 done
+
+echo "Player one won the game"
