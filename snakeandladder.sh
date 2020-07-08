@@ -2,47 +2,77 @@
 
 echo "welcome to snake and ladder simulator"
 
-playeronePosition=0
+playerOnePosition=0
+playerTwoPosition=0
 
-dieCount=0
+diceRolls=0
 
-function playerMovement()
+function dieRoll()
 {
 
+	playerPosition=$1
+	NOPLAY=0
+	LADDER=1
+	SNAKE=2
 
 	dieValue=$(( (( $RANDOM%6 ))+1 ))
 
 	case $(( (( $RANDOM%3 ))+1 )) in
 
-		1) echo "no play" ;;
+		$NOPLAY) playerPosition=$playerPosition ;;
 
-		2) playeronePosition=$(( $playeronePosition+$dieValue ))
-		   echo "player gone through ladder" ;;
+		$LADDER) playerPosition=$(( $playerPosition+$dieValue )) ;;
 
-		3) playeronePosition=$(( $playeronePosition-$dieValue ))
-		   echo "player gone through snake" ;;
+		$SNAKE) playerPosition=$(( $playerPosition-$dieValue )) ;;
+
 	esac
 
-	if [ $playeronePosition -lt 0 ]
+	if [ $playerPosition -lt 0 ]
 	then
-	playeronePosition=0
-	elif [ $playeronePosition -gt 100 ]
+	playerPosition=0
+	elif [ $playerPosition -gt 100 ]
 	then
-	playeronePosition=$(( $playeronePosition-$dieValue ))
+	playerPosition=$(( $playerPosition-$dieValue ))
 	fi
 
-	echo "Player position is : "$playeronePosition
+	echo $playerPosition
 }
 
-while [ $playeronePosition -lt 100 ]
-do
+function switchPlayer()
+{
 
-	playerMovement
 
-	dieCount=$(( $dieCount+1 ))
+	while [[ $playerOnePosition -lt 100 ]] && [[ $playerTwoPosition -lt 100 ]]
+	do
 
-done
+		playerOnePosition=$(dieRoll $playerOnePosition)
 
-echo "Player one won the game"
+		echo "player one position is  "$playerOnePosition
 
-echo "number of times dies rolled to win is : "$dieCount
+		playerTwoPosition=$(dieRoll $playerTwoPosition)
+
+		echo "player two position is  "$playerTwoPosition
+
+		dieRolls=$(( $dieRolls+1 ))
+	done
+}
+
+function winnerIs()
+{
+while [ $playerOnePosition -lt 100 ] && [ $playerTwoPosition -lt 100 ]
+	do
+		switchPlayer
+
+		if [ $playerOnePosition -eq 100 ]
+		then
+			echo "Player One Won "
+ 		break
+		elif [ $playerTwoPosition -eq 100 ]
+		then
+			echo "Player Two Won "
+		break
+		fi
+	done
+}
+winnerIs
+echo "Dice rolled to win is "$dieRolls
