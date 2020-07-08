@@ -4,12 +4,13 @@ echo "welcome to snake and ladder simulator"
 
 playeronePosition=0
 
+dieCount=0
+
 function playerMovement()
 {
 
-	dieValue=$(( (( $RANDOM%6 ))+1 ))
 
-	echo "player one die value is : " $dieValue
+	dieValue=$(( (( $RANDOM%6 ))+1 ))
 
 	case $(( (( $RANDOM%3 ))+1 )) in
 
@@ -35,7 +36,13 @@ function playerMovement()
 
 while [ $playeronePosition -lt 100 ]
 do
+
 	playerMovement
+
+	dieCount=$(( $dieCount+1 ))
+
 done
 
 echo "Player one won the game"
+
+echo "number of times dies rolled to win is : "$dieCount
