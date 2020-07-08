@@ -1,6 +1,9 @@
-#!/bin/bash -x
+#! /bin/bash
 
-echo "Welcome to Snake and Ladder simulator"
+echo "welcome to snake and ladder simulator"
 
-playerPosition=0
+playeronePosition=0
 
+dieValue=$(( (( $RANDOM%6 ))+1 ))
+
+echo "player one die value is : " $dieValue
