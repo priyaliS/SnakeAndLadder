@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 echo "welcome to snake and ladder simulator"
 
@@ -40,20 +40,15 @@ function dieRoll()
 
 function switchPlayer()
 {
-
-
 	while [[ $playerOnePosition -lt 100 ]] && [[ $playerTwoPosition -lt 100 ]]
 	do
+		dieRolls=$(( $dieRolls+1 ))
 
 		playerOnePosition=$(dieRoll $playerOnePosition)
-
 		echo "player one position is  "$playerOnePosition
 
 		playerTwoPosition=$(dieRoll $playerTwoPosition)
-
 		echo "player two position is  "$playerTwoPosition
-
-		dieRolls=$(( $dieRolls+1 ))
 	done
 }
 
@@ -62,7 +57,6 @@ function winnerIs()
 while [ $playerOnePosition -lt 100 ] && [ $playerTwoPosition -lt 100 ]
 	do
 		switchPlayer
-
 		if [ $playerOnePosition -eq 100 ]
 		then
 			echo "Player One Won "
